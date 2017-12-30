@@ -1,0 +1,9 @@
+# These files will not be copied to the Docker app container
+.git/
+.cache/
+.idea/
+logs/
+.coverage
+env/
+node_modules/
+bower_components/
