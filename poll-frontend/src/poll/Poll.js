@@ -1,5 +1,4 @@
 import React from "react";
-
 import PollQuestion from "./PollQuestion";
 import PollResult from "./PollResult";
 

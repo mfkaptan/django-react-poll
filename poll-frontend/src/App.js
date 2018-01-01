@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import PollList from './poll/PollList';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress';
+import Paper from 'material-ui/Paper';
+
 import PollCreate from './poll/PollCreate';
+import PollList from './poll/PollList';
 import './assets/css/App.css';
+
+const style = {
+  height: "100%",
+  width: 600,
+  margin: 40,
+  textAlign: 'left',
+  display: 'inline-block',
+};
 
 class App extends Component {
 
@@ -23,7 +35,7 @@ class App extends Component {
   }
 
   getAllQuestions() {
-    return fetch('http://localhost:8000/api/v1/polls/')
+    return fetch(this.api + "questions/")
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson)
@@ -38,7 +50,7 @@ class App extends Component {
   }
 
   postQuestion(question) {
-    return fetch(this.api + 'polls/', {
+    return fetch(this.api + 'questions/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -58,19 +70,24 @@ class App extends Component {
     let pollList;
 
     if (this.state.isLoading) {
-      pollList = (<div> Loading... </div>);
+      pollList = (<CircularProgress />);
     } else {
       pollList = (<PollList polls={this.state.polls} />);
     }
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to Poll</h1>
-        </header>
-        {pollList}
-        <PollCreate onPollCreate={this.handlePollCreate} />
-      </div>
+      <MuiThemeProvider>
+        <div className="App">
+          <header className="App-header">
+            <h1 className="App-title">Welcome to Poll</h1>
+          </header>
+
+          <Paper style={style} zDepth={1} >
+            {pollList}
+          </Paper>
+          <PollCreate onPollCreate={this.handlePollCreate} />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
