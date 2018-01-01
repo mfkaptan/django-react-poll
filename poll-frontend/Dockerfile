@@ -1,15 +1,12 @@
-FROM node:6-alpine
+FROM mhart/alpine-node:8.9.3
 
-RUN mkdir /build
 WORKDIR /build
 
-# Install and configure `serve`.
-RUN yarn global add serve
-CMD serve -s build
-EXPOSE 5000
+# Install serve
+CMD yarn start
 
 # Install all dependencies of the current project.
-COPY package.json package.json
+COPY package.json yarn.lock ./
 RUN yarn install
 
 # Copy all local files into the image.
