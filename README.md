@@ -5,13 +5,15 @@ A simple dockerized poll app built with Django 2.0 and React
 
 ### Run with docker
 
-Docker compose needs to be installed.
+**Docker compose needs to be installed.**
+
+Duplicate `.env-example` as `.env` and set the database password inside `.env`.
 
 Run with:
 
 `$ docker-compose up`
 
-Then open `http://localhost/` in the browser.
+Then, open `http://localhost/` in the browser.
 
 
 ### Used tech stack
