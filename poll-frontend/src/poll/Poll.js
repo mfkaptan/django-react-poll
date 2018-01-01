@@ -1,6 +1,7 @@
 import React from "react";
 import PollQuestion from "./PollQuestion";
 import PollResult from "./PollResult";
+import { VoteChoice } from "../actions.js";
 
 export default class Poll extends React.Component {
   constructor(props) {
@@ -14,19 +15,10 @@ export default class Poll extends React.Component {
 
   handleChoice(e) {
     e.preventDefault();
-    return fetch('http://localhost:8000/api/v1/choices/' + e.target.value + "/vote/", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson)
-        console.log(this.state)
+    return VoteChoice(e.target.value)
+      .then((response) => {
         this.setState({
-          poll: responseJson,
+          poll: response,
           choiceSelected: true
         });
       })

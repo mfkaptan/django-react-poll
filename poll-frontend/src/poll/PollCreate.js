@@ -1,5 +1,10 @@
 import React from "react";
 
+import { Card, CardTitle, CardActions, CardText } from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 export default class PollCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -25,32 +30,39 @@ export default class PollCreate extends React.Component {
   }
 
   handleCreate(e) {
-    e.preventDefault();
     this.props.onPollCreate(this.state);
+    this.setState({
+      "text": "",
+      "choices": [{ "text": "" }, { "text": "" }, { "text": "" }]
+    });
   }
 
   render() {
     let choices = []
     for (let i = 1; i <= 3; i++) {
       choices.push((
-        <label>
-          Choice {i}:
-          <input type="text" name={"choice"+i} id={"choice"+i} onChange={(e) => this.handleChoiceChange(i , e)} />
-         </label>
+          <TextField key={i} hintText={"Choice " + i} fullWidth={true} id={"choice" + i}
+          ref={"choice" + i} value={this.state.choices[i-1].text} onChange={(e) => this.handleChoiceChange(i, e)} />
       ))
     }
-    return (
-      <div>
-        <form>
-          <label>
-            Question:
-            <input type="text" name="question" id="question" onChange={this.handleQuestionChange} />
-          </label>
 
+    return (
+      <Card style={{ margin: 20 }}>
+        <CardTitle
+          title={<TextField hintText="Type your question: e.g. What is your favorite color?"
+          fullWidth={true} ref={"question"} id={"question"}
+          value={this.state.text} onChange={this.handleQuestionChange} />}
+        />
+
+        <CardText>
           {choices}
-          <button onClick={this.handleCreate}>+ Add new poll </button>
-        </form>
-      </div>
+        </CardText>
+
+        <CardActions>
+          <RaisedButton label="Add new question" primary={true} fullWidth={true}
+            onClick={this.handleCreate} />
+        </CardActions>
+      </Card>
     );
   }
 }

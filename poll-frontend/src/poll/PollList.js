@@ -7,7 +7,7 @@ export default function PollList(props) {
   const polls = props.polls;
 
   const pollList = polls.map((p) =>
-    <Poll poll={p}/>
+    <Poll key={p.id} poll={p}/>
   );
 
   return (

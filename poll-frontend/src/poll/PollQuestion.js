@@ -1,46 +1,33 @@
 import React from "react";
-import { Card, CardActions, CardHeader } from 'material-ui/Card';
+import { Card, CardActions, CardTitle } from 'material-ui/Card';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 
-export default class PollQuestion extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedChoice: null };
+export default function PollQuestion(props) {
+  const poll = props.poll;
+  const c = poll.choices.reverse()
 
-    this.styles = {
-      block: {
-        maxWidth: 250,
-      },
-      radioButton: {
-        marginBottom: 16,
-      },
-    };
-  }
+  const choices = c.map((choice) =>
+    <RadioButton
+      key={choice.id}
+      value={choice.id}
+      label={choice.text}
+      onClick={props.handleChoice}
+      style={{ marginBottom: 16, maxWidth: 600, wordWrap: "break-word" }}
+    />
+  );
 
-  render() {
-    const poll = this.props.poll;
-
-    const choices = poll.choices.map((choice) =>
-      <RadioButton
-        value={choice.id}
-        label={choice.text}
-        onClick={this.props.handleChoice}
-        style={{ marginBottom: 16, maxWidth: 250 }}
+  return (
+    <Card style={{ margin: 20 }}>
+      <CardTitle
+        title={poll.text}
+        style={{ wordWrap: "break-word" }}
       />
-    );
-
-    return (
-      <Card style={{ margin: 20 }}>
-        <CardHeader
-          title={poll.text}
-        />
-        <CardActions>
-          <RadioButtonGroup name="choices">
-            {choices}
-          </RadioButtonGroup>
-        </CardActions>
-      </Card>
-    );
-  }
+      <CardActions>
+        <RadioButtonGroup name="choices">
+          {choices}
+        </RadioButtonGroup>
+      </CardActions>
+    </Card>
+  );
 }

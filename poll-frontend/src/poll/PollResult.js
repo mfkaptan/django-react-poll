@@ -1,27 +1,31 @@
 import React from "react";
-import { Card, CardText, CardHeader } from 'material-ui/Card';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
+import Badge from 'material-ui/Badge';
 
 
-export default class PollResult extends React.Component {
-  render() {
-    const poll = this.props.poll;
-    console.log(this.props.poll)
-    const results = poll.choices.map((choice) =>
-      <ListItem primaryText={choice.text} badge={choice.votes} />
-    );
+export default function PollResult(props) {
+  const poll = props.poll;
+  const choices = props.poll.choices.reverse();
 
-    return (
-      <Card style={{ margin: 20 }}>
-        <CardHeader
-          title={poll.text}
-        />
-        <CardText>
-          <List>
-            {results}
-          </List>
-        </CardText>
-      </Card>
-    );
-  }
+  const results = choices.map((choice) =>
+    <ListItem key={choice.id} primaryText={choice.text} badge={choice.votes}
+      rightIconButton={<Badge badgeContent={choice.votes} primary={true}
+      style={{ maxWidth: 600, wordWrap: "break-word" }} />} />
+  );
+
+  return (
+    <Card style={{ margin: 20 }}>
+      <CardTitle
+        style={{ wordWrap: "break-word" }}
+        title={poll.text}
+        subtitle="Results"
+      />
+      <CardText>
+        <List>
+          {results}
+        </List>
+      </CardText>
+    </Card>
+  );
 }

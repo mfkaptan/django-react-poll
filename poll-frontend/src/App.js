@@ -5,11 +5,12 @@ import Paper from 'material-ui/Paper';
 
 import PollCreate from './poll/PollCreate';
 import PollList from './poll/PollList';
+import { GetAllQuestions, PostQuestion } from './actions'
 import './assets/css/App.css';
 
 const style = {
   height: "100%",
-  width: 600,
+  width: 800,
   margin: 40,
   textAlign: 'left',
   display: 'inline-block',
@@ -30,18 +31,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("Mounted")
     return this.getAllQuestions();
   }
 
   getAllQuestions() {
-    return fetch(this.api + "questions/")
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson)
+    return GetAllQuestions()
+      .then((response) => {
         this.setState({
           isLoading: false,
-          polls: responseJson
+          polls: response
         });
       })
       .catch((error) => {
@@ -49,20 +47,9 @@ class App extends Component {
       });
   }
 
-  postQuestion(question) {
-    return fetch(this.api + 'questions/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(question)
-    })
-  }
-
   handlePollCreate(poll) {
     console.log(poll)
-    this.postQuestion(poll)
+    PostQuestion(poll)
       .then(this.getAllQuestions)
   }
 
@@ -83,9 +70,9 @@ class App extends Component {
           </header>
 
           <Paper style={style} zDepth={1} >
+            <PollCreate onPollCreate={this.handlePollCreate} />
             {pollList}
           </Paper>
-          <PollCreate onPollCreate={this.handlePollCreate} />
         </div>
       </MuiThemeProvider>
     );
