@@ -7,7 +7,7 @@ from .views import home
 
 
 router = routers.DefaultRouter()
-router.register(r'polls', poll_viewsets.QuestionViewSet)
+router.register(r'questions', poll_viewsets.QuestionViewSet)
 router.register(r'choices', poll_viewsets.ChoiceViewSet)
 
 urlpatterns = [

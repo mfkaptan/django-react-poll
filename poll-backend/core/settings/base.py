@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'secret_key')
 SITE_ID = 1
 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#installed-apps
 INSTALLED_APPS = [

@@ -5,6 +5,10 @@ DEBUG = True
 
 INTERNAL_IPS = ["127.0.0.1"]
 
+ALLOWED_HOSTS = ["*"]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache"
